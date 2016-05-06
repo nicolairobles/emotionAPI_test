@@ -1,0 +1,73 @@
+<p>This example shows how to post a video to the Project Oxford Emotion API</p>
+ <!-- <input type="file" id="filename" name="filename"> -->
+ <button id="btn">Click here</button>
+ <p id="response"></p>
+ <div class="loading"></div>
+ 
+<script type="text/javascript">
+	//apiKey: Replace this with your own Project Oxford Emotion API key, please do not use my key. I include it here so you can get up and running quickly but you can get your own key for free at https://www.projectoxford.ai/emotion 
+	var apiKey = "6f027d66bef64938872d4f519168495f";
+
+	//apiUrl: The base URL for the API. Find out what this is for other APIs via the API documentation
+	// Video
+	var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognizeinvideo";
+	// Image
+	// var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
+
+	$('#btn').click(function () {
+		console.log("button clicked");
+		//file: The file that will be sent to the api
+		// var file = document.getElementById('filename').files[0];
+
+		CallAPI(apiUrl, apiKey);
+	});
+
+	function CallAPI(apiUrl, apiKey){
+		console.log("API called");
+		$(".loading").css("display", "inline-block");
+		$.ajax({
+			url: apiUrl,
+			beforeSend: function (xhrObj) {
+				xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
+				xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", apiKey);
+			},
+			type: "POST",
+			crossDomain: true,
+			data: '{url: "http://localhost:4000/mark_zuck.mov"}',
+			// 'Access-Control-Allow-Origin'
+			processData: false,
+			contentType: 'application/octet-stream',
+			success: function(response){
+				console.log("API success");
+				ProcessResult(response);
+				$(".loading").css("display", "none");
+				console.log(response);
+			},
+			error: function(error){
+				console.log("API failed");
+				$("#response").text(error.getAllResponseHeaders());
+				$(".loading").css("display", "none");
+				console.log(error);
+			}
+		})
+		// .done(function (response) {
+		// 	console.log("API success");
+		// 	ProcessResult(response);
+		// 	$(".loading").css("display", "none");
+		// 	console.log(response);
+
+		// })
+		// .fail(function (error) {
+		// 	console.log("API failed");
+		// 	$("#response").text(error.getAllResponseHeaders());
+		// 	$(".loading").css("display", "none");
+		// 	console.log(error);
+
+		// });
+	}
+
+	function ProcessResult(response){
+		var data = JSON.stringify(response);
+		$("#response").text(data);
+	}
+</script>
