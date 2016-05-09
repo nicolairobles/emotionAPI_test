@@ -1,0 +1,57 @@
+<%= form_for(@frame) do |f| %>
+  <% if @frame.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@frame.errors.count, "error") %> prohibited this frame from being saved:</h2>
+
+      <ul>
+      <% @frame.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :video_id %><br>
+    <%= f.text_field :video_id %>
+  </div>
+  <div class="field">
+    <%= f.label :video_timestamp %><br>
+    <%= f.text_field :video_timestamp %>
+  </div>
+  <div class="field">
+    <%= f.label :anger %><br>
+    <%= f.text_field :anger %>
+  </div>
+  <div class="field">
+    <%= f.label :contempt %><br>
+    <%= f.text_field :contempt %>
+  </div>
+  <div class="field">
+    <%= f.label :disgust %><br>
+    <%= f.text_field :disgust %>
+  </div>
+  <div class="field">
+    <%= f.label :fear %><br>
+    <%= f.text_field :fear %>
+  </div>
+  <div class="field">
+    <%= f.label :happiness %><br>
+    <%= f.text_field :happiness %>
+  </div>
+  <div class="field">
+    <%= f.label :neutral %><br>
+    <%= f.text_field :neutral %>
+  </div>
+  <div class="field">
+    <%= f.label :sadness %><br>
+    <%= f.text_field :sadness %>
+  </div>
+  <div class="field">
+    <%= f.label :surprise %><br>
+    <%= f.text_field :surprise %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

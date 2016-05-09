@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Frames</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Video</th>
+      <th>Video timestamp</th>
+      <th>Anger</th>
+      <th>Contempt</th>
+      <th>Disgust</th>
+      <th>Fear</th>
+      <th>Happiness</th>
+      <th>Neutral</th>
+      <th>Sadness</th>
+      <th>Surprise</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @frames.each do |frame| %>
+      <tr>
+        <td><%= frame.video %></td>
+        <td><%= frame.video_timestamp %></td>
+        <td><%= frame.anger %></td>
+        <td><%= frame.contempt %></td>
+        <td><%= frame.disgust %></td>
+        <td><%= frame.fear %></td>
+        <td><%= frame.happiness %></td>
+        <td><%= frame.neutral %></td>
+        <td><%= frame.sadness %></td>
+        <td><%= frame.surprise %></td>
+        <td><%= link_to 'Show', frame %></td>
+        <td><%= link_to 'Edit', edit_frame_path(frame) %></td>
+        <td><%= link_to 'Destroy', frame, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Frame', new_frame_path %>

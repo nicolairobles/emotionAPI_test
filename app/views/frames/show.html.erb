@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Video:</strong>
+  <%= @frame.video %>
+</p>
+
+<p>
+  <strong>Video timestamp:</strong>
+  <%= @frame.video_timestamp %>
+</p>
+
+<p>
+  <strong>Anger:</strong>
+  <%= @frame.anger %>
+</p>
+
+<p>
+  <strong>Contempt:</strong>
+  <%= @frame.contempt %>
+</p>
+
+<p>
+  <strong>Disgust:</strong>
+  <%= @frame.disgust %>
+</p>
+
+<p>
+  <strong>Fear:</strong>
+  <%= @frame.fear %>
+</p>
+
+<p>
+  <strong>Happiness:</strong>
+  <%= @frame.happiness %>
+</p>
+
+<p>
+  <strong>Neutral:</strong>
+  <%= @frame.neutral %>
+</p>
+
+<p>
+  <strong>Sadness:</strong>
+  <%= @frame.sadness %>
+</p>
+
+<p>
+  <strong>Surprise:</strong>
+  <%= @frame.surprise %>
+</p>
+
+<%= link_to 'Edit', edit_frame_path(@frame) %> |
+<%= link_to 'Back', frames_path %>

@@ -1,8 +1,20 @@
 <p>This example shows how to post a video to the Project Oxford Emotion API</p>
- <!-- <input type="file" id="filename" name="filename"> -->
+ <input type="file" id="filename" name="filename">
  <button id="btn">Click here</button>
  <p id="response"></p>
  <div class="loading"></div>
+
+<!-- EMOTIONS -->
+<!-- "anger":0.00000100283239,
+"contempt":0.0007505452,
+"disgust":0.00000135752077,
+"fear":4.24426148e-8,
+"happiness":0.483357251,
+"neutral":0.5158449,
+"sadness":0.00003620872,
+"surprise":0.000008685204
+ -->
+
  
 <script type="text/javascript">
 	//apiKey: Replace this with your own Project Oxford Emotion API key, please do not use my key. I include it here so you can get up and running quickly but you can get your own key for free at https://www.projectoxford.ai/emotion 
@@ -10,19 +22,19 @@
 
 	//apiUrl: The base URL for the API. Find out what this is for other APIs via the API documentation
 	// Video
-	var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognizeinvideo";
+	var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
 	// Image
 	// var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
 
 	$('#btn').click(function () {
 		console.log("button clicked");
 		//file: The file that will be sent to the api
-		// var file = document.getElementById('filename').files[0];
+		var file = document.getElementById('filename').files[0];
 
-		CallAPI(apiUrl, apiKey);
+		CallAPI(file, apiUrl, apiKey);
 	});
 
-	function CallAPI(apiUrl, apiKey){
+	function CallAPI(file, apiUrl, apiKey){
 		console.log("API called");
 		$(".loading").css("display", "inline-block");
 		$.ajax({
@@ -33,7 +45,8 @@
 			},
 			type: "POST",
 			crossDomain: true,
-			data: '{url: "http://localhost:4000/mark_zuck.mov"}',
+			data: file, 
+			// '{url: "http://localhost:4000/mark_zuck.mov"}',
 			// 'Access-Control-Allow-Origin'
 			processData: false,
 			contentType: 'application/octet-stream',
@@ -50,22 +63,8 @@
 				console.log(error);
 			}
 		})
-		// .done(function (response) {
-		// 	console.log("API success");
-		// 	ProcessResult(response);
-		// 	$(".loading").css("display", "none");
-		// 	console.log(response);
-
-		// })
-		// .fail(function (error) {
-		// 	console.log("API failed");
-		// 	$("#response").text(error.getAllResponseHeaders());
-		// 	$(".loading").css("display", "none");
-		// 	console.log(error);
-
-		// });
 	}
-
+// rails generate Frame video:references video_timestamp
 	function ProcessResult(response){
 		var data = JSON.stringify(response);
 		$("#response").text(data);
