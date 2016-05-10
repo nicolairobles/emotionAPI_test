@@ -33,10 +33,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor'
 
 # Video processing
-gem 'streamio-ffmpeg'
+# gem 'streamio-ffmpeg'
 
 # File uploading
-gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+# gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem 'paperclip-av-transcoder'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
