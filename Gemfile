@@ -35,6 +35,7 @@ gem 'rails_12factor'
 # Video processing
 gem 'streamio-ffmpeg'
 
+
 # File uploading
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'paperclip-av-transcoder'
