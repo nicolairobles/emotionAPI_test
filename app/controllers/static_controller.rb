@@ -1,6 +1,6 @@
 class StaticController < ApplicationController
 require 'net/http'
-require 'streamio-ffmpeg'
+require 'paperclip-av-transcoder'
 
 	def index
 		# movie = FFMPEG::Movie.new("/Users/nicolai/code/projects/emotionAPI_test/public/mark_zuck.mp4")
