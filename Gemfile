@@ -36,7 +36,7 @@ gem 'rails_12factor'
 # gem 'streamio-ffmpeg'
 
 # File uploading
-# gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'paperclip-av-transcoder'
 
 # Use Capistrano for deployment
