@@ -1,7 +1,7 @@
 class FramesController < ApplicationController
   before_action :set_frame, only: [:show, :edit, :update, :destroy]
   require 'net/http'
-  require 'paperclip-av-transcoder'
+  # require 'paperclip-av-transcoder'
 
   # GET /frames
   # GET /frames.json
