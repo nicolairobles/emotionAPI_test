@@ -7,46 +7,47 @@ require 'net/http'
 		# movie.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/test2/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
 
 		# Emotion Image API attempt
-			uri = URI('https://api.projectoxford.ai/emotion/v1.0/recognize')
-			uri.query = URI.encode_www_form({
-			})
+		# 	uri = URI('https://api.projectoxford.ai/emotion/v1.0/recognize')
+		# 	uri.query = URI.encode_www_form({
+		# 	})
 
-			data = File.read("./public/full color pic.png")
+		# 	data = File.read("./public/full color pic.png")
 
-			request = Net::HTTP::Post.new(uri.request_uri)
-			# Request headers
-			request['Ocp-Apim-Subscription-Key'] = '6f027d66bef64938872d4f519168495f'
-			# Request body
-			# request.body = data
-			request['Content-Type'] = 'application/octet-stream'
-			request.body = data
-			# '{"url": "http://localhost:4000/mark_zuck.mp4"}'
-			response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-			    http.request(request)
-			end
+		# 	request = Net::HTTP::Post.new(uri.request_uri)
+		# 	# Request headers
+		# 	request['Ocp-Apim-Subscription-Key'] = '6f027d66bef64938872d4f519168495f'
+		# 	# Request body
+		# 	# request.body = data
+		# 	request['Content-Type'] = 'application/octet-stream'
+		# 	request.body = data
+		# 	# '{"url": "http://localhost:4000/mark_zuck.mp4"}'
+		# 	response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+		# 	    http.request(request)
+		# 	end
 
-		puts response.body
+		# puts response.body
 
 
 	# Failed Emotion Video API attempt
-	# 	uri = URI('https://api.projectoxford.ai/emotion/v1.0/recognizeinvideo')
-	# 	uri.query = URI.encode_www_form({
-	# 	})
+		uri = URI('https://api.projectoxford.ai/emotion/v1.0/recognizeinvideo')
+		uri.query = URI.encode_www_form({
+		})
 
-	# 	# data = File.read("./public/mark_zuck.mov")
+		# data = File.read("./public/mark_zuck.mov")
 
-	# 	request = Net::HTTP::Post.new(uri.request_uri)
-	# 	# Request headers
-	# 	request['Ocp-Apim-Subscription-Key'] = '6f027d66bef64938872d4f519168495f'
-	# 	# Request body
-	# 	# request.body = data
-	# 	request['Content-Type'] = 'application/octet-stream'
-	# 	request.body = '{"url": "http://localhost:4000/mark_zuck.mp4"}'
-	# 	response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-	# 	    http.request(request)
-	# 	end
+		request = Net::HTTP::Post.new(uri.request_uri)
+		# Request headers
+		request['Ocp-Apim-Subscription-Key'] = '6f027d66bef64938872d4f519168495f'
+		# Request body
+		# request.body = data
+		request['Content-Type'] = 'application/octet-stream'
+		request.body = File.read("./public/mark_zuck.mov")
+		# '{"url": "http://localhost:4000/mark_zuck.mp4"}'
+		response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+		    http.request(request)
+		end
 
-	# 	puts response.body
+		puts response.body
 	end 
 	
 end

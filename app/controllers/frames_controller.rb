@@ -41,7 +41,7 @@ class FramesController < ApplicationController
 
       request = Net::HTTP::Post.new(uri.request_uri)
       # Request headers
-      request['Ocp-Apim-Subscription-Key'] = '6f027d66bef64938872d4f519168495f'
+      request['Ocp-Apim-Subscription-Key'] = ENV['MEA_SubscriptionKey1']
       # Request body
       # request.body = data
       request['Content-Type'] = 'application/octet-stream'
