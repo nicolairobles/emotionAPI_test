@@ -2,6 +2,7 @@ class StaticController < ApplicationController
 require 'net/http'
 
 	def index
+		Frame.delete_all
 		# Create new FFMPEG Movie
 		movie = FFMPEG::Movie.new("/Users/nicolai/code/projects/emotionAPI_test/public/mark_zuck.mp4")
 		# Parse FFMPEG Movie into frames
@@ -11,10 +12,9 @@ require 'net/http'
 
 		# Grab frames from Amazon to send them to API
 
-		# Send frames to API
+		# Grab directory where all files where stored from FFMPEG
 		file = File.read(File.join(Rails.root,'public', 'test2','image-0001.jpeg'))
 		directory = Dir[File.join(Rails.root,'public', 'test2',"*")]
-		directory.each {|image| puts "I got #{image}" }
 
 		# Loop through directory where images are stored and read each file
 		directory.each do |image|
@@ -34,8 +34,8 @@ require 'net/http'
 			end
 			# Pull out JSON data from response
 			puts response.body
-			# Inject data into Frames table
-			json_scores = JSON.parse(response.body).first
+			json = JSON.parse(response.body).first # gets array
+			json_scores = json["scores"]
 			anger = json_scores["anger"]
 			contempt = json_scores["contempt"]
 			disgust = json_scores["disgust"]
@@ -44,7 +44,16 @@ require 'net/http'
 			neutral = json_scores["neutral"]
 			sadness = json_scores["sadness"]
 			surprise = json_scores["surprise"]
-			
+			# Inject data into Frames table
+    	@frame = Frame.create(
+    		anger: anger, 
+    		contempt: contempt, 
+    		disgust: disgust, 
+    		fear: fear, 
+    		happiness: happiness, 
+    		neutral: neutral, 
+    		sadness: sadness,
+    		surprise: surprise)
 			
 		end
 
