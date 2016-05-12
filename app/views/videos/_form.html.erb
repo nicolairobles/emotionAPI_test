@@ -1,4 +1,18 @@
-<%= form_for(@video) do |f| %>
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
+<% end %>
+
+<%= form_for(@video) do |f|%>
+    <p>
+    <%= f.file_field 'upload[file]' %>
+    </p>
+    <p>
+      <%= f.submit "Upload" %>
+    </p>
+<% end %>
+
+
+<!-- <%= form_for(@video) do |f| %> --><!-- 
   <% if @video.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@video.errors.count, "error") %> prohibited this video from being saved:</h2>
@@ -8,18 +22,18 @@
         <li><%= message %></li>
       <% end %>
       </ul>
-    </div>
-  <% end %>
+    </div> -->
+  <!-- <% end %> -->
 
-  <div class="field">
+  <!-- <div class="field"> -->
     <!-- <%= f.label :time_length %><br> -->
     <!-- <%= f.text_field :time_length %> -->
-    <%= f.file_field :video_file %>
+    <!-- <%= f.file_field :video_file %> -->
 <!--      <input type="file" id="filename" name="filename">
      <p id="response"></p>
      <div class="loading"></div> -->
-  </div>
+<!--   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
+<% end %>  -->
