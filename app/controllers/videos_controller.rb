@@ -41,13 +41,12 @@ class VideosController < ApplicationController
     flash[:notice] = "File uploaded"
     redirect_to "/videos/new"
     @video = Video.new(video_params)
-    binding.pry
     # Create FFMPEG Movie file
     movie = FFMPEG::Movie.new(path)
     # Splice video intro frames
     movie.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/test2/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
     # Redirect to FramesController
-    redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
+    # redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
 
     # respond_to do |format|
     #   if @video.save
