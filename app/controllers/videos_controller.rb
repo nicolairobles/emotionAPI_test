@@ -16,13 +16,6 @@ class VideosController < ApplicationController
   # GET /videos/new
   def new
     @video = Video.new
-    # if @video.save
-    #   # Splices videos into frames (for each second)
-    #   movie = FFMPEG::Movie.new("./public/mark_zuck.mp4")
-    #   movie.transcode("movie.mp4", "-r 1 /public/test2/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
-    # else
-    #   # TBD
-    # end
   end
 
   # GET /videos/1/edit
