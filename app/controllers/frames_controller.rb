@@ -26,6 +26,14 @@ class FramesController < ApplicationController
 
   def create_emotiondata_graph(method_name)
     #input will be data and it will output to front 
+    file = File.join(Rails.root,'public', 'csv', "file.csv")
+    CSV.open(file, "wb") do |csv|
+      csv << Frame.attribute_names
+      Frame.all.each do |user|
+        csv << user.attributes.values
+      end
+    end
+
   end
 
   # POST /frames
@@ -35,12 +43,12 @@ class FramesController < ApplicationController
 
     Frame.delete_all
     # Create new FFMPEG Movie
-    movie = FFMPEG::Movie.new(File.join(Rails.root,'public', 'images', 'upload', 'TBD'))
+    movie = FFMPEG::Movie.new(File.join(Rails.root,'public', 'images', 'upload', 'movie.mp4'))
     # Parse FFMPEG Movie into frames
     movie.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/test2/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
 
     # Send Frames to Amazon for storage
-
+    
     # Grab frames from Amazon to send them to API
 
     # Grab directory where all files where stored from FFMPEG

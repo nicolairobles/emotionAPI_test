@@ -1,5 +1,7 @@
 class VideosController < ApplicationController
   require 'net/http'
+  require 'csv'
+  
   before_action :set_video, only: [:show, :edit, :update, :destroy]
 
   # GET /videos
@@ -25,21 +27,30 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.json
   def create
-    # Store file in app for immediate purposes
-    file = params[:video][:upload][:file].read
-    name = params[:video][:upload][:file].original_filename
-    directory = "public/images/upload"
-    path = File.join(directory, name)
-    File.open(path, "wb") { |f| f.write(file) }
-    flash[:notice] = "File uploaded"
-    redirect_to "/videos/new"
     @video = Video.new(video_params)
-    # Create FFMPEG Movie file
-    movie = FFMPEG::Movie.new(path)
-    # Splice video intro frames
-    movie.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/test2/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
-    # Redirect to FramesController
-    # redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
+
+    # Store file in app for immediate purposes
+    video_file = params[:video][:upload][:file].read
+    video_file_name = params[:video][:upload][:file].original_filename
+    video_directory = "public/images/upload"
+    path = File.join(video_directory, video_file_name)
+
+    # Writes video into designated directory
+    File.open(path, "wb") { |f| f.write(video_file) }
+    flash[:notice] = "File uploaded"
+
+    # Splice video
+    splice_video(path)
+
+    # Retrieve Frame data
+    frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
+    retrieveAPIdata(frames_dir_path)
+
+    # Create graph of data
+    create_APIData_graph(Frame)
+    
+    # Redirect to same page
+    redirect_to "/videos/new"
 
     # respond_to do |format|
     #   if @video.save
@@ -51,6 +62,79 @@ class VideosController < ApplicationController
     #   end
     # end
   end
+
+  def splice_video(path_of_video)
+    # Create FFMPEG Movie file
+    movie_to_splice = FFMPEG::Movie.new(path_of_video)
+    # Splice video intro frames
+    movie_to_splice.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/images/frames/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+
+    # Redirect to FramesController
+    # redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
+  end 
+
+  def retrieveAPIdata(frames_directory)
+    Frame.delete_all
+    p "Deleted previous frames"
+    p "Retrieving API data"
+    # Loop through directory where images are stored and read each file
+    frames_directory.each do |image|
+    # Emotion Image API call
+      # Set parameters
+      uri = URI('https://api.projectoxford.ai/emotion/v1.0/recognize')
+      uri.query = URI.encode_www_form({
+      })
+      request = Net::HTTP::Post.new(uri.request_uri)
+      request['Ocp-Apim-Subscription-Key'] = ENV["MEA_SubscriptionKey1"]
+      request['Content-Type'] = 'application/octet-stream'
+      # Read in appropriate file
+      request.body = File.read("#{image}")
+      # Make HTTP request to API
+      response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request(request)
+      end
+      # Pull out JSON data from response
+      puts response.body
+      json = JSON.parse(response.body).first # gets array
+      json_scores = json["scores"]
+      anger = json_scores["anger"]
+      contempt = json_scores["contempt"]
+      disgust = json_scores["disgust"]
+      fear = json_scores["fear"]
+      happiness = json_scores["happiness"]
+      neutral = json_scores["neutral"]
+      sadness = json_scores["sadness"]
+      surprise = json_scores["surprise"]
+      # Inject data into Frames table
+      @frame = Frame.create(
+        anger: anger, 
+        contempt: contempt, 
+        disgust: disgust, 
+        fear: fear, 
+        happiness: happiness, 
+        neutral: neutral, 
+        sadness: sadness,
+        surprise: surprise)
+    end
+    p "Successfully retrieved emotionAPI data"
+  end 
+
+  def create_APIData_graph(table)
+    p "Creating API Data graph"
+    # Create CSV file
+    file = File.join(Rails.root,'public', 'csv', "file.csv")
+    CSV.open(file, "wb") do |csv|
+      csv << table.attribute_names
+
+      table.all.each do |user|
+        csv << user.attributes.values
+      end
+    end
+
+    # Render CSV data for front-end implementation of graph
+    p "Successfully created CSV"
+  end 
+
 
   # PATCH/PUT /videos/1
   # PATCH/PUT /videos/1.json
