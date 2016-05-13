@@ -185,6 +185,20 @@
 
 <%= render 'form' %>
 
+<div id="graphdiv"></div>
+<script type="text/javascript">
+  g = new Dygraph(
+
+    // containing div
+    document.getElementById("graphdiv"),
+
+    // CSV or path to a CSV file.
+    // "/Users/nicolai/code/projects/emotionAPI_test/public/csv/file.csv"
+    "<%= root_path + "public/csv/fiel.csv" %>"
+
+  );
+</script>
+
 
 <!-- ENDS FILE UPLOADING VERSION -->
 

@@ -42,7 +42,7 @@ class VideosController < ApplicationController
     # Splice video
     splice_video(path)
 
-    # Retrieve Frame data
+    # Retrieve emotion data from API based on frames
     frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
     retrieveAPIdata(frames_dir_path)
 
@@ -130,9 +130,12 @@ class VideosController < ApplicationController
         csv << user.attributes.values
       end
     end
-
-    # Render CSV data for front-end implementation of graph
     p "Successfully created CSV"
+    # Render CSV data for front-end implementation of graph
+    p "Creating graph"
+    
+
+    p "Created and rendered graph"
   end 
 
 

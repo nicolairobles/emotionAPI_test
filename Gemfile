@@ -41,6 +41,9 @@ gem 'streamio-ffmpeg'
 gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'paperclip-av-transcoder'
 
+# Graph library
+gem "dygraphs-rails"
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
