@@ -1,13 +1,12 @@
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="author" type="text/html" href="https://plus.google.com/+MuazKhan">
     <meta name="author" content="Muaz Khan">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
     <link rel="stylesheet" href="https://cdn.webrtc-experiment.com/style.css">
 
     <style>
@@ -78,21 +77,117 @@
     <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
     <script src="https://cdn.webrtc-experiment.com/gif-recorder.js"></script>
     <script src="https://cdn.webrtc-experiment.com/getScreenId.js"></script>
-
     <!-- for Edige/FF/Chrome/Opera/etc. getUserMedia support -->
     <script src="https://cdn.webrtc-experiment.com/gumadapter.js"></script>
 </head>
 
 <body>
 
-<%= render 'form' %>
 
-<html lang="en">
-    <article>
-        
+<!-- RECORD TEMP -->
+<!--|Preloader|-->
+<div class="preloader"></div> <!--|End Preloader|-->
 
-        
-        
+<!--|
+/ Navbar
+/=========================================================================================|-->
+<nav class="navbar">
+  <div class="container">
+    <!--|Navbar Header|-->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="ion-navicon"></i>
+      </button>
+
+      <!--|Site Brand|-->
+      <a class="navbar-brand" href="#">
+      <%= image_tag "emotize-logo.png"%>
+      <!-- <img src=url(asset-path("emotize-logo.png"))> -->
+      </a>
+    </div> <!--|End Navbar Header|-->
+
+    <!--|Nav|-->
+    <div class="collapse navbar-collapse" id="primary-nav">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><button type="button" class="btn btn-primary btn-lg startbtn">Start Session</button></li>
+      </ul>
+    </div><!--|End Nav|-->
+  </div>
+</nav> <!--|End Navbar|-->
+
+<!--|
+/ Intro Section
+/=========================================================================================|-->
+<section id="intro" class="intro-section overlay-black">
+
+  <div class="overlay-inner">
+    <div class="container">
+
+      <!--|Site Brand|-->
+      <div class="site-brand">
+        <!--|Logo|-->
+        <a class="fp-logo" href="#">    
+        <%= image_tag 'emotize-logo-footer.png' %>
+        </a> <!--|End Logo|-->
+        <!--|Social links|-->
+      </div> <!--|End Site Brand|-->
+
+
+      <!--|Intro Content|-->
+      <div class="intro-content">
+        <div class="row">
+          <div class="col-md-8 block-center">
+            <h2 class="intro-title wow fadeInDown" data-wow-delay=".1s">Instructions</h2>
+                <ol class="emotize">
+                  <li class="emotize">A well lit room helps us detect your facial expressions.</li>
+                  <li class="emotize">Speak clearly into your computer’s microphone.</li>
+                  <li class="emotize">Make sure the camera is pointed straight ahead at your face.</li>
+                  <li class="emotize">To start recording your speech, hit the "record" button.</li>
+                  <li class="emotize">To stop recording your speech, hit the "stop" recording button.</li>
+                  <li class="emotize">If you like what was recorded, then click "Submit."</li>
+                  <li class="emotize">If you want to record again, click "Rerecord."</li>
+                </ol>
+          </div>
+        </div>
+      </div> <!--|End Intro Content|-->
+
+      <!--|Scroll Down Icon|-->
+      <span class="scroll-down"><i class="ion-ios-arrow-thin-down"></i></span>
+    </div>
+  </div>
+</section> <!--|Intro Section|-->
+
+
+
+<!--|
+/ Overview
+/=========================================================================================|-->
+<div id="section-1" class="brief">
+  <section class="section">
+    <div class="container">
+      <!--|Section Header|-->
+      <header class="section-header text-center wow bounceIn" data-wow-delay=".05s">
+        <div class="row">
+          <div class="col-md-6 block-center">
+            <h2 class="section-title">Get Ready To Record!</h2>
+
+
+
+
+
+
+
+<!-- VIDEO RECORDING -->
+
+
+<!-- DAN'S VIDEO CODE -->
+
+
+    <article>   
         <section class="experiment recordrtc">
             <h2 class="header">
                 <select class="recording-media">
@@ -826,5 +921,84 @@
     </script>
     <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
 </body>
+<!-- ENDS DAN'S VIDEO CODE -->
 
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ENDS VIDEO RECORDING -->
+
+
+
+            <p>Press the record button to start recording</p>
+          </div>
+        </div>
+      </header> <!--|End Section Header|-->
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-3 margin-top-60 fp-text-right">
+        </div>
+
+        <div class="col-md-6 text-center">
+          <%= image_tag "webcam-image-1.jpg"%>
+
+          <!-- <img src="assets/images/ari-jigar-images/webcam-image-1.jpg" alt=""> -->
+        </div>
+
+        <div class="col-md-3 col-sm-3 margin-top-60">
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="recordbutton text-center">
+            <a href="#">
+            <%= image_tag "record-button.png"%>
+
+            <!-- <img src="assets/images/ari-jigar-images/record-button.png" alt="" width="100px"> -->
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+
+<!--|===================================================================
+/ Footer
+/=======================================================================|-->
+<footer class="footer text-center">
+  <div class="container">
+    <a class="footer-logo" href="#">
+    <%= image_tag 'emotize-logo-footer.png' %> 
+    <!-- <img src="assets/images/ari-jigar-images/emotize-logo-footer.png" alt=""> -->
+    </a>
+    <p class="copyright">&copy; 2016 Emotize.it. All Rights Reserved</p>
+  </div>
+</footer> <!--|End Footer|-->
+
+<!--|Scroll Top|-->
+<a class="scroll-top" href="#intro"><i class="ion-android-navigate"></i></a> <!--|End Scroll Top|-->
+<!-- ENDS RECORD TEMPLATE -->
+
+
+
+
+
