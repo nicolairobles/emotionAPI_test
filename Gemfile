@@ -42,7 +42,7 @@ gem 'streamio-ffmpeg'
 
 # File uploading
 gem "paperclip"
-gem 'paperclip-av-transcoder'
+# gem 'paperclip-av-transcoder'
 
 # Graph library
 gem "dygraphs-rails"

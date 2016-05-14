@@ -3,7 +3,7 @@
 <% end %>
 
 <%= form_for(@video) do |f|%>
-    <%= f.file_field 'upload[file]', :style => "margin: 0 auto;" %>
+    <%= f.file_field :video_file, :style => "margin: 0 auto;" %>
       <%= f.submit "Upload" %>
 <% end %>
 

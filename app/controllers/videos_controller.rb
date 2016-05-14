@@ -27,36 +27,36 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.json
   def create
-    @video = Video.new(video_params)
+    @video = Video.create(video_params)
 
     # Store file in app for immediate purposes
     # 
     # HOW TO STORE VIDEO AT AWS
     # 
-    video_file = params[:video][:upload][:file].read
-    video_file_name = params[:video][:upload][:file].original_filename
-    video_directory = "public/images/upload"
-    path = File.join(video_directory, video_file_name)
+    # video_file = params[:video][:upload][:file].read
+    # video_file_name = params[:video][:upload][:file].original_filename
+    # video_directory = "public/images/upload"
+    # path = File.join(video_directory, video_file_name)
 
-    # Writes video into designated directory
-    File.open(path, "wb") { |f| f.write(video_file) }
-    flash[:notice] = "File uploaded"
+    # # Writes video into designated directory
+    # File.open(path, "wb") { |f| f.write(video_file) }
+    # flash[:notice] = "File uploaded"
 
     # Splice video
-    splice_video(path)
+    # splice_video(path)
 
-    # Retrieve emotion data from API based on frames
-    # 
-    # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
-    #
-    frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
-    retrieveAPIdata(frames_dir_path)
+    # # Retrieve emotion data from API based on frames
+    # # 
+    # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
+    # #
+    # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
+    # retrieveAPIdata(frames_dir_path)
 
-    # Create graph of data
-    create_APIData_graph(Frame)
+    # # Create graph of data
+    # create_APIData_graph(Frame)
     
     # Redirect to same page
-    redirect_to "/videos/new"
+    redirect_to @video 
 
     # respond_to do |format|
     #   if @video.save
