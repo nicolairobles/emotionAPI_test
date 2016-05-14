@@ -103,29 +103,47 @@
 
 <div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
 <script type="text/javascript">
-  g = new Dygraph(
+  // g = new Dygraph(
 
     // containing div
-    document.getElementById("graphdiv"),
+    var div = document.getElementById("graphdiv");
+
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+      if (req.readyState == 4) {
+        if (req.status === 200 || // Normal http
+            req.status === 0) { // Chrome w/ --allow-file-access-from-files
+          var data = req.responseText;
+          drawGraph(data);
+        }
+      }
+    };
+    req.open('GET', 'https://s3-us-west-2.amazonaws.com/emotizecsvfile/emotizecsvfile', true);
+    req.send(null);
+    var drawGraph = function(data) {
+      console.log(typeof(data));
+      console.log(data);
+      new Dygraph(div, data);
+    }
 
     // CSV or path to a CSV file.
     // "/Users/nicolai/code/projects/emotionAPI_test/public/csv/file.csv"
-    // "localhost:3000/file.csv"
-    "Date,Humid,Temperature\n" +
-    "2008-05-07,76,75\n" +
-    "2008-05-08,80,70\n" +
-    "2008-05-09,90,80\n",
-    {// options go here. See http://dygraphs.com/options.html
-     legend: 'always',
-     animatedZooms: true,
-     title: 'dygraphs chart template',
-     drawXGrid: true,                     
-     drawYGrid: false,
-     gridLinePattern:[0,1,1]
-    }
+    
+    // "Date,Humid,Temperature\n" +
+    // "2008-05-07,76,75\n" +
+    // "2008-05-08,80,70\n" +
+    // "2008-05-09,90,80\n",
+    // {// options go here. See http://dygraphs.com/options.html
+    //  legend: 'always',
+    //  animatedZooms: true,
+    //  title: 'dygraphs chart template',
+    //  drawXGrid: true,                     
+    //  drawYGrid: false,
+    //  gridLinePattern:[0,1,1]
+    // }
 
 
-  );
+  // );
 </script>
 
 

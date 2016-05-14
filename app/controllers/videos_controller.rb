@@ -4,7 +4,7 @@ class VideosController < ApplicationController
   require 'open-uri'
 
   before_action :set_video, only: [:show, :edit, :update, :destroy]
-  before_action :aws_client, only: [:splice_video]
+  before_action :aws_client
 
   # GET /videos
   # GET /videos.json
@@ -75,7 +75,7 @@ class VideosController < ApplicationController
     clean_up_local_image_files(frames_dir_path)
 
     # # Create graph of data
-    # create_APIData_graph(Frame)
+    create_APIData_graph(Frame)
     
     # Redirect to same page
     redirect_to @video 
@@ -110,8 +110,8 @@ class VideosController < ApplicationController
 
     movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/public/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
 
-    # Store image in AWS
-    aws_client
+    # Store image in AWS; done in before action
+    # aws_client
 
     Dir.foreach("#{Rails.root}/public/images/frames/") do |fname|
       puts fname
@@ -206,6 +206,11 @@ class VideosController < ApplicationController
         # csv << user.attributes.values
       end
     end
+    # Upload to AWS
+    s3 = Aws::S3::Resource.new
+    p "csv output"
+    p s3.bucket('emotizecsvfile').object("emotizecsvfile").upload_file("#{Rails.root}/public/file.csv")
+
     p "Successfully created CSV"
     # Render CSV data for front-end implementation of graph
     p "Creating graph"
