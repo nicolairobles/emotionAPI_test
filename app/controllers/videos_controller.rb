@@ -48,16 +48,21 @@ class VideosController < ApplicationController
 
     # Splice video
     file_name = @video.video_file_file_name
+    puts "file_name: #{file_name.inspect}"
     remote_path = @video.video_file.url
+    puts "remote_path: #{remote_path.inspect}"
+
     # open(file_name, 'wb') do |file|
     #   file << open(remote_path).read
     # end
     # p file_name
     local_path = "#{Rails.root}/public/images/#{file_name}"
+    puts "local_path: #{local_path.inspect}"
+
     open(local_path, 'wb') do |file|
       file << open(remote_path).read
     end
-    puts "local_path: #{local_path.inspect}"
+    # puts "local_path: #{local_path.inspect}"
 
     splice_video(local_path, file_name)
 
@@ -98,17 +103,16 @@ class VideosController < ApplicationController
   end
 
   def splice_video(path_of_video, file_name)
-    # 
-    # HOW TO RETRIEVE VIDEO FROM AWS
-    #
+    puts "inside splice_video"
     # Create FFMPEG Movie file
-
-
     movie_to_splice = FFMPEG::Movie.new(path_of_video)
+    puts "movie_to_splice: #{movie_to_splice.inspect}"
+    puts "file_name: #{file_name.inspect}"
+
     # Splice video intro frames
 
-
     movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/public/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+    puts "after transcoding"
 
     # Store image in AWS; done in before action
     # aws_client
