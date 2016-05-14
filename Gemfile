@@ -44,6 +44,8 @@ gem 'streamio-ffmpeg'
 # File uploading
 gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
 gem 'paperclip-av-transcoder'
+# For video playback
+gem "paperclip-ffmpeg", "~> 1.0.1"
 
 # Graph library
 gem "dygraphs-rails"

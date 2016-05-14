@@ -68,7 +68,11 @@ class VideosController < ApplicationController
     # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
     # #
     # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
-    # retrieveAPIdata(frames_dir_path)
+    frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
+    retrieve_api_data(frames_dir_path)
+
+    # Delete frames locally
+    clean_up_local_image_files(frames_dir_path)
 
     # # Create graph of data
     # create_APIData_graph(Frame)
@@ -85,6 +89,12 @@ class VideosController < ApplicationController
     #     format.json { render json: @video.errors, status: :unprocessable_entity }
     #   end
     # end
+  end
+
+  def clean_up_local_image_files(directory)
+    directory.each do |fname|
+      File.delete(fname)
+    end
   end
 
   def splice_video(path_of_video, file_name)
@@ -109,7 +119,6 @@ class VideosController < ApplicationController
       # uplaod each file to s3
       s3 = Aws::S3::Resource.new
       p s3.bucket('emotizeframes').object(fname).upload_file("#{Rails.root}/public/images/frames/#{fname}")
-      File.delete("#{Rails.root}/public/images/frames/#{fname}")
     end
 
 
@@ -127,7 +136,7 @@ class VideosController < ApplicationController
     })
   end 
 
-  def retrieveAPIdata(frames_directory)
+  def retrieve_api_data(frames_directory)
     Frame.delete_all
     p "Deleted previous frames"
     p "Retrieving API data"

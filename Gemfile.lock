@@ -112,6 +112,8 @@ GEM
     paperclip-av-transcoder (0.6.4)
       av (~> 0.9.0)
       paperclip (>= 2.5.2)
+    paperclip-ffmpeg (1.0.1)
+      paperclip (>= 2.5.2)
     pg (0.18.4)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -203,6 +205,7 @@ DEPENDENCIES
   jquery-rails
   paperclip!
   paperclip-av-transcoder
+  paperclip-ffmpeg (~> 1.0.1)
   pg (~> 0.15)
   pry
   pry-rails
