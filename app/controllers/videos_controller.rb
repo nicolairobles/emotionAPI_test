@@ -1,8 +1,10 @@
 class VideosController < ApplicationController
   require 'net/http'
   require 'csv'
-  
+  require 'open-uri'
+
   before_action :set_video, only: [:show, :edit, :update, :destroy]
+  before_action :aws_client, only: [:splice_video]
 
   # GET /videos
   # GET /videos.json
@@ -42,8 +44,24 @@ class VideosController < ApplicationController
     # File.open(path, "wb") { |f| f.write(video_file) }
     # flash[:notice] = "File uploaded"
 
+
+
     # Splice video
-    # splice_video(path)
+    file_name = @video.video_file_file_name
+    remote_path = @video.video_file.url
+    # open(file_name, 'wb') do |file|
+    #   file << open(remote_path).read
+    # end
+    # p file_name
+    local_path = "#{Rails.root}/public/images/#{file_name}"
+    open(local_path, 'wb') do |file|
+      file << open(remote_path).read
+    end
+    puts "local_path: #{local_path.inspect}"
+
+    splice_video(local_path, file_name)
+
+    # splice_video(remote_path, file_name)
 
     # # Retrieve emotion data from API based on frames
     # # 
@@ -69,17 +87,44 @@ class VideosController < ApplicationController
     # end
   end
 
-  def splice_video(path_of_video)
+  def splice_video(path_of_video, file_name)
     # 
     # HOW TO RETRIEVE VIDEO FROM AWS
     #
     # Create FFMPEG Movie file
+
+
     movie_to_splice = FFMPEG::Movie.new(path_of_video)
     # Splice video intro frames
-    movie_to_splice.transcode("movie.mp4", "-r 1 /Users/nicolai/code/projects/emotionAPI_test/public/images/frames/image-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+
+
+    movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/public/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+
+    # Store image in AWS
+    aws_client
+
+    Dir.foreach("#{Rails.root}/public/images/frames/") do |fname|
+      puts fname
+      next if fname == '.' or fname == '..'
+      # uplaod each file to s3
+      s3 = Aws::S3::Resource.new
+      p s3.bucket('emotizeframes').object(fname).upload_file("#{Rails.root}/public/images/frames/#{fname}")
+      File.delete("#{Rails.root}/public/images/frames/#{fname}")
+    end
+
+
+    # Delete video locally
+    File.delete(path_of_video)
 
     # Redirect to FramesController
     # redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
+  end 
+
+  def aws_client
+    @aws_client ||= Aws.config.update({
+      region: 'us-west-2',
+      credentials: Aws::Credentials.new(ENV.fetch("AWS_ACCESS_KEY_ID"), ENV.fetch('AWS_SECRET_ACCESS_KEY'))
+    })
   end 
 
   def retrieveAPIdata(frames_directory)

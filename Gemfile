@@ -24,7 +24,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # AWS gems
-gem 'aws-sdk', '~> 2'
+# gem 'aws-sdk', '< 2'
+gem 'aws-sdk', '>= 2.0.34'
 gem 'aws-sdk-rails'
 
 # Use ActiveModel has_secure_password
@@ -41,8 +42,8 @@ gem 'streamio-ffmpeg'
 
 
 # File uploading
-gem "paperclip"
-# gem 'paperclip-av-transcoder'
+gem 'paperclip', :git=> 'https://github.com/thoughtbot/paperclip', :ref => '523bd46c768226893f23889079a7aa9c73b57d68'
+gem 'paperclip-av-transcoder'
 
 # Graph library
 gem "dygraphs-rails"
