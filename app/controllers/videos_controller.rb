@@ -30,6 +30,9 @@ class VideosController < ApplicationController
     @video = Video.new(video_params)
 
     # Store file in app for immediate purposes
+    # 
+    # HOW TO STORE VIDEO AT AWS
+    # 
     video_file = params[:video][:upload][:file].read
     video_file_name = params[:video][:upload][:file].original_filename
     video_directory = "public/images/upload"
@@ -43,6 +46,9 @@ class VideosController < ApplicationController
     splice_video(path)
 
     # Retrieve emotion data from API based on frames
+    # 
+    # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
+    #
     frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
     retrieveAPIdata(frames_dir_path)
 
@@ -64,6 +70,9 @@ class VideosController < ApplicationController
   end
 
   def splice_video(path_of_video)
+    # 
+    # HOW TO RETRIEVE VIDEO FROM AWS
+    #
     # Create FFMPEG Movie file
     movie_to_splice = FFMPEG::Movie.new(path_of_video)
     # Splice video intro frames
@@ -122,18 +131,31 @@ class VideosController < ApplicationController
   def create_APIData_graph(table)
     p "Creating API Data graph"
     # Create CSV file
-    file = File.join(Rails.root,'public', 'csv', "file.csv")
+    file = File.join(Rails.root,'public', "file.csv")
     CSV.open(file, "wb") do |csv|
-      csv << table.attribute_names
+      csv << table.attribute_names[3,8].unshift("id")
+      # csv << table.attribute_names
+      frame_count_secs = 01
+      frame_count_mins = 00
+      frame_timestamp = ":00"
 
       table.all.each do |user|
-        csv << user.attributes.values
+        if frame_count_secs%60 == 0
+          frame_count_secs = 0
+          frame_count_mins += 1
+          frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
+        else
+          frame_count_secs += 1
+          frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
+        end
+          csv << user.attributes.values[3,8].unshift(frame_timestamp)
+        # csv << user.attributes.values
       end
     end
     p "Successfully created CSV"
     # Render CSV data for front-end implementation of graph
     p "Creating graph"
-    
+
 
     p "Created and rendered graph"
   end 

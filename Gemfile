@@ -22,8 +22,11 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+# AWS gems
 gem 'aws-sdk', '~> 2'
 gem 'aws-sdk-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -38,7 +41,7 @@ gem 'streamio-ffmpeg'
 
 
 # File uploading
-gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip"
 gem 'paperclip-av-transcoder'
 
 # Graph library
