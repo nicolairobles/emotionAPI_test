@@ -54,6 +54,7 @@ class VideosController < ApplicationController
     #   file << open(remote_path).read
     # end
     # p file_name
+    Dir.mkdir(File.join(Rails.root, 'tmp', "videos"))
     local_path = "#{Rails.root}/tmp/videos/#{file_name}"
     Rails.logger.info "local_path: #{local_path.inspect}"
 
@@ -71,6 +72,8 @@ class VideosController < ApplicationController
     # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
     # #
     # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
+    Dir.mkdir(File.join(Rails.root, 'tmp', "images","frames"))
+
     frames_dir_path = Dir[File.join(Rails.root,'tmp', 'images',"frames","*")]
     retrieve_api_data(frames_dir_path)
 
