@@ -44,8 +44,6 @@ class VideosController < ApplicationController
     # File.open(path, "wb") { |f| f.write(video_file) }
     # flash[:notice] = "File uploaded"
 
-
-
     # Splice video
     file_name = @video.video_file_file_name
     Rails.logger.info "file_name: #{file_name.inspect}"
@@ -56,7 +54,7 @@ class VideosController < ApplicationController
     #   file << open(remote_path).read
     # end
     # p file_name
-    local_path = "#{Rails.root}/public/images/#{file_name}"
+    local_path = "#{Rails.root}/tmp/videos/#{file_name}"
     Rails.logger.info "local_path: #{local_path.inspect}"
 
     open(local_path, 'wb') do |file|
@@ -73,7 +71,7 @@ class VideosController < ApplicationController
     # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
     # #
     # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
-    frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
+    frames_dir_path = Dir[File.join(Rails.root,'tmp', 'images',"frames","*")]
     retrieve_api_data(frames_dir_path)
 
     # Delete frames locally
@@ -111,18 +109,18 @@ class VideosController < ApplicationController
 
     # Splice video intro frames
 
-    movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/public/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+    movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/tmp/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
     Rails.logger.info "after transcoding"
 
     # Store image in AWS; done in before action
     # aws_client
 
-    Dir.foreach("#{Rails.root}/public/images/frames/") do |fname|
+    Dir.foreach("#{Rails.root}/tmp/images/frames/") do |fname|
       puts fname
       next if fname == '.' or fname == '..'
       # uplaod each file to s3
       s3 = Aws::S3::Resource.new
-      p s3.bucket('emotizeframes').object(fname).upload_file("#{Rails.root}/public/images/frames/#{fname}")
+      p s3.bucket('emotizeframes').object(fname).upload_file("#{Rails.root}/tmp/images/frames/#{fname}")
     end
 
 
@@ -189,7 +187,7 @@ class VideosController < ApplicationController
   def create_APIData_graph(table)
     p "Creating API Data graph"
     # Create CSV file
-    file = File.join(Rails.root,'public', "file.csv")
+    file = File.join(Rails.root,'tmp', "file.csv")
     CSV.open(file, "wb") do |csv|
       csv << table.attribute_names[3,8].unshift("id")
       # csv << table.attribute_names
@@ -213,7 +211,7 @@ class VideosController < ApplicationController
     # Upload to AWS
     s3 = Aws::S3::Resource.new
     p "csv output"
-    p s3.bucket('emotizecsvfile').object("emotizecsvfile").upload_file("#{Rails.root}/public/file.csv")
+    p s3.bucket('emotizecsvfile').object("emotizecsvfile").upload_file("#{Rails.root}/tmp/file.csv")
 
     p "Successfully created CSV"
     # Render CSV data for front-end implementation of graph
