@@ -28,6 +28,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'aws-sdk', '>= 2.0.34'
 gem 'aws-sdk-rails'
 
+# Setting default values for model columns
+gem "default_value_for", "~> 3.0.0"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

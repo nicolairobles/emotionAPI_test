@@ -62,6 +62,7 @@ class VideosController < ApplicationController
       file << open(remote_path).read
     end
     # puts "local_path: #{local_path.inspect}"
+    Dir.mkdir(File.join(Rails.root, 'tmp', "images","frames"))
 
     splice_video(local_path, file_name)
 
@@ -72,7 +73,6 @@ class VideosController < ApplicationController
     # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
     # #
     # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
-    Dir.mkdir(File.join(Rails.root, 'tmp', "images","frames"))
 
     frames_dir_path = Dir[File.join(Rails.root,'tmp', 'images',"frames","*")]
     retrieve_api_data(frames_dir_path)
@@ -192,24 +192,28 @@ class VideosController < ApplicationController
     # Create CSV file
     file = File.join(Rails.root,'tmp', "file.csv")
     CSV.open(file, "wb") do |csv|
-      csv << table.attribute_names[3,8].unshift("id")
-      # csv << table.attribute_names
-      frame_count_secs = 01
-      frame_count_mins = 00
-      frame_timestamp = ":00"
-
+      # csv << table.attribute_names[3,8].unshift("id")
+      csv << table.attribute_names[2,9]
       table.all.each do |user|
-        if frame_count_secs%60 == 0
-          frame_count_secs = 0
-          frame_count_mins += 1
-          frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
-        else
-          frame_count_secs += 1
-          frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
-        end
-          csv << user.attributes.values[3,8].unshift(frame_timestamp)
-        # csv << user.attributes.values
+        csv << user.attributes.values[2,9]
       end
+      # csv << table.attribute_names
+      # frame_count_secs = 01
+      # frame_count_mins = 00
+      # frame_timestamp = ":00"
+
+      # table.all.each do |user|
+      #   if frame_count_secs%60 == 0
+      #     frame_count_secs = 0
+      #     frame_count_mins += 1
+      #     frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
+      #   else
+      #     frame_count_secs += 1
+      #     frame_timestamp = "#{frame_count_mins}:#{frame_count_secs}"
+      #   end
+      #     csv << user.attributes.values[3,8].unshift(frame_timestamp)
+      #   # csv << user.attributes.values
+      # end
     end
     # Upload to AWS
     s3 = Aws::S3::Resource.new

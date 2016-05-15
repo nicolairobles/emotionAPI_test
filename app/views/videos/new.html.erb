@@ -103,10 +103,9 @@
 
 <div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
 <script type="text/javascript">
-  // g = new Dygraph(
 
     // containing div
-    var div = document.getElementById("graphdiv");
+    // var div = document.getElementById("graphdiv");
 
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
@@ -123,8 +122,37 @@
     var drawGraph = function(data) {
       console.log(typeof(data));
       console.log(data);
-      new Dygraph(div, data);
+      var div = document.getElementById("graphdiv");
+      g = new Dygraph(
+        div, 
+        data,
+        {
+          legend: 'always',
+          animatedZooms: true,
+          title: 'Emotional Data',
+          drawGrid: false,                     
+          axisLineWidth: "0",
+          gridLinePattern:[0,1,1],
+
+          xAxisLabelWidth: 80,
+          axisLabelFontSize: 12,
+          width: 800,
+          height: 350,
+          xValueFormatter: Dygraph.dateString_,
+          xValueParser: function(x) { 
+              var m = moment(x, "DD-MM-YYYY HH:mm:ss");
+              return m.toDate().getTime();
+          },
+          xTicker: Dygraph.dateTicker
+          // xValueFormatter: Dygraph.dateString_,
+          // xValueParser: function(x) { return 1000*parseInt(x); },
+          // xTicker: Dygraph.dateTicker
+        }
+      );
     }
+  // g = new Dygraph(
+    // document.getElementById("graphdiv"),
+    // data 
 
     // CSV or path to a CSV file.
     // "/Users/nicolai/code/projects/emotionAPI_test/public/csv/file.csv"

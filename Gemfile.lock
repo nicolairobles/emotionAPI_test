@@ -78,6 +78,8 @@ GEM
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
+    default_value_for (3.0.1)
+      activerecord (>= 3.2.0, < 5.0)
     dygraphs-rails (1.0.1)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -200,6 +202,7 @@ DEPENDENCIES
   aws-sdk-rails
   byebug
   coffee-rails (~> 4.1.0)
+  default_value_for (~> 3.0.0)
   dygraphs-rails
   jbuilder (~> 2.0)
   jquery-rails
