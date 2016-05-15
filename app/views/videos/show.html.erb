@@ -1,10 +1,101 @@
-<p id="notice"><%= notice %></p>
-<p><%= video_tag(@video.video_file.url) %></p>
-<iframe width="500" height="500" src=<%= @video.video_file.url %>  frameborder="0"></iframe>
-<p>
-  <strong>Time length:</strong>
-  <%= @video.time_length %>
-</p>
+<!--|
+/ Intro Section
+/=========================================================================================|-->
+<section id="intro" class="intro-section overlay-black">
+
+  <div class="overlay-inner" style="padding: 50px 0 85px;">
+    <div class="container">
+
+      <!--|Site Brand|-->
+      <div class="site-brand">
+        <!--|Logo|-->
+        <a class="fp-logo" href="#">    
+        <%= image_tag 'emotize-logo-footer.png' %>
+        </a> <!--|End Logo|-->
+        <!--|Social links|-->
+      </div> <!--|End Site Brand|-->
+      <p id="notice"><%= notice %></p>
+      <h1 style="font-family: Helvetica Neue; font-size:1.5em ;margin: -50px 0 20px;">RESULTS</h1>
+			<iframe src=<%= @video.video_file.url %>  frameborder="0"></iframe>
+      <!--|Scroll Down Icon|-->
+      <!-- <span class="scroll-down"><i class="ion-ios-arrow-thin-down"></i></span> -->
+    </div>
+  </div>
+</section> <!--|Intro Section|-->
+
+
+<div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
+<script type="text/javascript">
+
+    // containing div
+    // var div = document.getElementById("graphdiv");
+
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function () {
+      if (req.readyState == 4) {
+        if (req.status === 200 || // Normal http
+            req.status === 0) { // Chrome w/ --allow-file-access-from-files
+          var data = req.responseText;
+          drawGraph(data);
+        }
+      }
+    };
+    req.open('GET', 'https://s3-us-west-2.amazonaws.com/emotizecsvfile/emotizecsvfile', true);
+    req.send(null);
+    var drawGraph = function(data) {
+      console.log(typeof(data));
+      console.log(data);
+      var div = document.getElementById("graphdiv");
+      g = new Dygraph(
+        div, 
+        data,
+        {
+          legend: 'always',
+          animatedZooms: true,
+          title: 'Emotional Data',
+          drawGrid: false,                     
+          axisLineWidth: "0",
+          gridLinePattern:[0,1,1],
+
+          xAxisLabelWidth: 80,
+          axisLabelFontSize: 12,
+          width: 800,
+          height: 350,
+          xValueFormatter: Dygraph.dateString_,
+          xValueParser: function(x) { 
+              var m = moment(x, "DD-MM-YYYY HH:mm:ss");
+              return m.toDate().getTime();
+          },
+          xTicker: Dygraph.dateTicker
+          // xValueFormatter: Dygraph.dateString_,
+          // xValueParser: function(x) { return 1000*parseInt(x); },
+          // xTicker: Dygraph.dateTicker
+        }
+      );
+    }
+  // g = new Dygraph(
+    // document.getElementById("graphdiv"),
+    // data 
+
+    // CSV or path to a CSV file.
+    // "/Users/nicolai/code/projects/emotionAPI_test/public/csv/file.csv"
+    
+    // "Date,Humid,Temperature\n" +
+    // "2008-05-07,76,75\n" +
+    // "2008-05-08,80,70\n" +
+    // "2008-05-09,90,80\n",
+    // {// options go here. See http://dygraphs.com/options.html
+    //  legend: 'always',
+    //  animatedZooms: true,
+    //  title: 'dygraphs chart template',
+    //  drawXGrid: true,                     
+    //  drawYGrid: false,
+    //  gridLinePattern:[0,1,1]
+    // }
+
+
+  // );
+</script>
 
 <%= link_to 'Edit', edit_video_path(@video) %> |
 <%= link_to 'Back', videos_path %>

@@ -9,7 +9,70 @@
 </head>
 <body>
 
+<!--|Preloader|-->
+<div class="preloader"></div> <!--|End Preloader|-->
+
+<!--|
+/ Navbar
+/=========================================================================================|-->
+<nav class="navbar">
+  <div class="container">
+    <!--|Navbar Header|-->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-nav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="ion-navicon"></i>
+      </button>
+
+      <!--|Site Brand|-->
+      <a class="navbar-brand" href="#">
+      <%= image_tag "emotize-logo.png"%>
+      <!-- <img src=url(asset-path("emotize-logo.png"))> -->
+      </a>
+    </div> <!--|End Navbar Header|-->
+
+    <!--|Nav|-->
+    <div class="collapse navbar-collapse" id="primary-nav">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><button type="button" class="btn btn-primary btn-lg startbtn">Start Session</button></li>
+      </ul>
+    </div><!--|End Nav|-->
+  </div>
+</nav> <!--|End Navbar|-->
+
+
+
+
+
+
 <%= yield %>
+
+
+
+
+
+
+<!--|===================================================================
+/ Footer
+/=======================================================================|-->
+<footer class="footer text-center" style ="padding: 25px 0 1px;">
+  <div class="container">
+    <a class="footer-logo" href="#">
+    <%= image_tag 'emotize-logo-footer.png' %> 
+    <!-- <img src="assets/images/ari-jigar-images/emotize-logo-footer.png" alt=""> -->
+    </a>
+    <p class="copyright">&copy; 2016 Emotize.it. All Rights Reserved</p>
+  </div>
+</footer> <!--|End Footer|-->
+
+<!--|Scroll Top|-->
+<a class="scroll-top" href="#intro"><i class="ion-android-navigate"></i></a> <!--|End Scroll Top|-->
+<!-- ENDS RECORD TEMPLATE -->
+
+
 
 </body>
 </html>
