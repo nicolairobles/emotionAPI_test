@@ -52,6 +52,8 @@ gem "paperclip-ffmpeg", "~> 1.0.1"
 
 # Graph library
 gem "dygraphs-rails"
+# Moment js for datetime manipulation of csv data
+gem 'momentjs-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
