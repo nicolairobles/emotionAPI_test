@@ -64,6 +64,7 @@ class VideosController < ApplicationController
       file << open(remote_path).read
     end
     # puts "local_path: #{local_path.inspect}"
+    Dir.mkdir(File.join(Rails.root, 'tmp', "images"))
     Dir.mkdir(File.join(Rails.root, 'tmp', "images","frames"))
 
     splice_video(local_path, file_name)
