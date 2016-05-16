@@ -110,6 +110,7 @@ class VideosController < ApplicationController
 
   def clean_up_local_dirs
     Dir.delete(File.join(Rails.root, 'tmp', "images","frames"))
+    Dir.delete(File.join(Rails.root, 'tmp', "images"))
     Dir.delete(File.join(Rails.root, 'tmp', "videos"))
   end 
 
