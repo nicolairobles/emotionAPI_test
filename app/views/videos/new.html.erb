@@ -29,6 +29,16 @@
                   <li class="emotize">If you want to record again, click "Rerecord."</li>
                 </ol>
                 <button href="#section-1" type="button" class="btn btn-primary btn-lg startbtn upload" >Start</button>
+                <script type="text/javascript">
+                  console.log('button script loaded.');
+                  $('.upload').click(function(event){
+                    console.log("button clicked");
+                      $('html, body').animate({
+                          scrollTop: $( $.attr(this, 'href') ).offset().top
+                      }, 500);
+                      event.preventDefault();
+                  });
+                </script>
           </div>
         </div>
       </div> <!--|End Intro Content|-->

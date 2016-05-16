@@ -23,14 +23,14 @@
 
 $(function(){
 	
-  console.log('script loaded.');
-	$('.upload').click(function(event){
-		console.log("button clicked");
-	    $('html, body').animate({
-	        scrollTop: $( $.attr(this, 'href') ).offset().top
-	    }, 500);
-	    event.preventDefault();
-	});
+ //  console.log('button script loaded.');
+	// $('.upload').click(function(event){
+	// 	console.log("button clicked");
+	//     $('html, body').animate({
+	//         scrollTop: $( $.attr(this, 'href') ).offset().top
+	//     }, 500);
+	//     event.preventDefault();
+	// });
 
 
 })();
