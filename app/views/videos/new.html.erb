@@ -3,45 +3,18 @@
 /=========================================================================================|-->
 <section id="intro" class="intro-section overlay-black">
 
-  <div class="overlay-inner">
+  <div class="overlay-inner" style="padding: 33px 0 0px;">
     <div class="container">
 
       <!--|Site Brand|-->
-      <div class="site-brand">
+      <div class="site-brand" style="margin-bottom: 40px">
         <!--|Logo|-->
         <a class="fp-logo" href="#">    
         <%= image_tag 'emotize-logo-footer.png' %>
         </a> <!--|End Logo|-->
-        <!--|Social links|-->
       </div> <!--|End Site Brand|-->
       <!--|Intro Content|-->
-      <div class="intro-content">
-        <div class="row">
-          <div class="col-md-8 block-center">
-            <h2 class="intro-title wow fadeInDown" data-wow-delay=".1s">Instructions</h2>
-                <ol class="emotize">
-                  <li class="emotize">A well lit room helps us detect your facial expressions.</li>
-                  <li class="emotize">Speak clearly into your computer’s microphone.</li>
-                  <li class="emotize">Make sure the camera is pointed straight ahead at your face.</li>
-                  <li class="emotize">To start recording your speech, hit the "record" button.</li>
-                  <li class="emotize">To stop recording your speech, hit the "stop" recording button.</li>
-                  <li class="emotize">If you like what was recorded, then click "Submit."</li>
-                  <li class="emotize">If you want to record again, click "Rerecord."</li>
-                </ol>
-                <button href="#section-1" type="button" class="btn btn-primary btn-lg startbtn upload" >Start</button>
-                <script type="text/javascript">
-                  console.log('button script loaded.');
-                  $('.upload').click(function(event){
-                    console.log("button clicked");
-                      $('html, body').animate({
-                          scrollTop: $( $.attr(this, 'href') ).offset().top
-                      }, 500);
-                      event.preventDefault();
-                  });
-                </script>
-          </div>
-        </div>
-      </div> <!--|End Intro Content|-->
+
 
       <!--|Scroll Down Icon|-->
       <!-- <span class="scroll-down"><i class="ion-ios-arrow-thin-down"></i></span> -->
@@ -54,14 +27,38 @@
 <!--|
 / Overview
 /=========================================================================================|-->
-<div id="section-1" class="brief">
+ <div id="section-1" class="brief">
   <section class="section">
     <div class="container">
-      <!--|Section Header|-->
-      <header class="section-header text-center wow bounceIn" data-wow-delay=".05s">
+      <div class="intro-content">
         <div class="row">
-          <div class="col-md-6 block-center" style="width:80%;">
-            <h2 id="upload" class="section-title">Upload Your Video</h2>
+          <div class="col-md-8 block-center">
+            <h2 class="intro-title wow fadeInDown" data-wow-delay=".1s" style="margin: -35px 0 20px;">Instructions</h2>
+                <ol class="emotize">
+                  <li class="emotize"> <b>Lighting</b> - A well lit room helps us detect your facial expressions.</li>
+                  <li class="emotize"> <b>Enunciate</b> - Speak clearly into your computer’s microphone.</li>
+                  <li class="emotize"><b>Face Angle </b>- Make sure the camera is pointed straight ahead at your face.</li>
+                  <li class="emotize"><b>Record</b> - Record your speech.</li>
+                  <li class="emotize"><b>Upload</b> - Upload your video file. Preferably an mp4 file.</li>
+                  <!-- <li class="emotize">If you like what was recorded, then click "Submit."</li> -->
+                  <li class="emotize"><b>Sit Tight </b>- We'll be splicing, dicing, processing, and analyzing your facial expressions!</li>
+                </ol>
+                <br>
+                <%= render 'form' %>
+<!--                 <button href="#section-1" type="button" class="btn btn-primary btn-lg startbtn upload" >Start</button>
+                <script type="text/javascript">
+                  console.log('button script loaded.');
+                  $('.upload').click(function(event){
+                    console.log("button clicked");
+                      $('html, body').animate({
+                          scrollTop: $( $.attr(this, 'href') ).offset().top
+                      }, 500);
+                      event.preventDefault();
+                  });
+                </script> -->
+          </div>
+        </div>
+      </div> <!--|End Intro Content|-->
 
 
 
@@ -70,11 +67,10 @@
 
 <!-- UPLOAD FILE VERSION -->
 
-
-<%= render 'form' %>
+<!-- 
 <br>
-<br>
-
+<br> -->
+<!-- 
 <div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
 <script type="text/javascript">
 
@@ -85,7 +81,7 @@
     req.onreadystatechange = function () {
       if (req.readyState == 4) {
         if (req.status === 200 || // Normal http
-            req.status === 0) { // Chrome w/ --allow-file-access-from-files
+            req.status === 0) { // Chrome w/ -allow-file-access-from-files
           var data = req.responseText;
           drawGraph(data);
         }
@@ -147,44 +143,10 @@
 
   // );
 </script>
-
+ -->
 
 <!-- ENDS FILE UPLOADING VERSION -->
 
-
-
-            <!-- <p>Press the record button to start recording</p> -->
-          </div>
-        </div>
-      </header> <!--|End Section Header|-->
-
-      <div class="row">
-
-        <div class="col-md-3 col-sm-3 margin-top-60 fp-text-right">
-        </div>
-
-        <div class="col-md-6 text-center">
-          <!-- <%= image_tag "webcam-image-1.jpg"%> -->
-
-          <!-- <img src="assets/images/ari-jigar-images/webcam-image-1.jpg" alt=""> -->
-        </div>
-
-        <div class="col-md-3 col-sm-3 margin-top-60">
-        </div>
-
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="recordbutton text-center">
-            <a href="#">
-            <!-- <%= image_tag "record-button.png"%> -->
-
-            <!-- <img src="assets/images/ari-jigar-images/record-button.png" alt="" width="100px"> -->
-            </a>
-          </div>
-        </div>
-      </div>
 
 
     </div>

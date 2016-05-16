@@ -2,6 +2,8 @@ class VideosController < ApplicationController
   require 'net/http'
   require 'csv'
   require 'open-uri'
+  require 'fileutils'
+
 
   before_action :set_video, only: [:show, :edit, :update, :destroy]
   before_action :aws_client
@@ -79,9 +81,11 @@ class VideosController < ApplicationController
 
     # Delete frames locally
     clean_up_local_image_files(frames_dir_path)
+    clean_up_local_dirs()
 
     # # Create graph of data
     create_APIData_graph(Frame)
+
     
     # Redirect to same page
     redirect_to @video 
@@ -102,6 +106,11 @@ class VideosController < ApplicationController
       File.delete(fname)
     end
   end
+
+  def clean_up_local_dirs
+    Dir.delete(File.join(Rails.root, 'tmp', "images","frames"))
+    Dir.delete(File.join(Rails.root, 'tmp', "videos"))
+  end 
 
   def splice_video(path_of_video, file_name)
     Rails.logger.info "inside splice_video"

@@ -1,84 +1,220 @@
-<!-- <p>This example shows how to post a video to the Project Oxford Emotion API</p>
- <input type="file" id="filename" name="filename">
- <button id="btn">Click here</button>
- <p id="response"></p>
- <div class="loading"></div> -->
+<!--|
+/ Intro Section
+/=========================================================================================|-->
+<section id="intro" class="intro-section overlay-black">
+  <div class="clouds">
+    <div class="clouds_one"></div>
+    <div class="clouds_two"></div>
+    <div class="clouds_three"></div>
+  </div>
 
- <% flash.each do |key, msg| %>
-    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
-<% end %>
-<% form_tag '/upload/create', { :multipart => true } do %>
-    <p>
-    <%= file_field_tag 'video_file' %>
-    </p>
-    <p>
-      <%= submit_tag "Upload" %>
-    </p>
-<% end %>
+  <div class="overlay-inner">
+    <div class="container">
+          <!--|Site Brand|-->
+      <div class="site-brand">
+        <!--|Logo|-->
+        <a class="fp-logo" href="/">    
+        <%= image_tag 'emotize-logo-footer.png' %>
+        </a> <!--|End Logo|-->
+      </div> <!--|End Site Brand|-->
 
-<!-- EMOTIONS -->
-<!-- "anger":0.00000100283239,
-"contempt":0.0007505452,
-"disgust":0.00000135752077,
-"fear":4.24426148e-8,
-"happiness":0.483357251,
-"neutral":0.5158449,
-"sadness":0.00003620872,
-"surprise":0.000008685204
- -->
+      <!--|Intro Content|-->
+      <div class="intro-content">
+        <div class="row">
+          <div class="col-md-8 block-center">
+            <h2 class="intro-title wow fadeInDown" data-wow-delay=".1s">Level Up Your Speaking</h2>
+            <h3><strong>Helping you measure your emotions in the workplace.</strong></h3>
+            <a href="#section-1" class="btn btn-primary btn-lg startbtn">Learn More</a>
+            <a href="/videos/new" class="btn btn-primary btn-lg startbtn">Start Session</a>
+            <script type="text/javascript">
+              $('.btn').click(function(event){
+                $('html, body').animate({
+                  scrollTop: $( $.attr(this, 'href') ).offset().top
+                }, 500);
+                event.preventDefault();
+              });
+            </script>
+          </div>
+        </div>
+      </div> <!--|End Intro Content|-->
 
-<!--  
-<script type="text/javascript">
-	//apiKey: Replace this with your own Project Oxford Emotion API key, please do not use my key. I include it here so you can get up and running quickly but you can get your own key for free at https://www.projectoxford.ai/emotion 
-	var apiKey = "6f027d66bef64938872d4f519168495f";
+      <!--|Scroll Down Icon|-->
+      <span class="scroll-down"><i class="ion-ios-arrow-thin-down"></i></span>
+    </div>
+  </div>
+</section> <!--|Intro Section|-->
 
-	//apiUrl: The base URL for the API. Find out what this is for other APIs via the API documentation
-	// Video
-	var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
-	// Image
-	// var apiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
 
-	$('#btn').click(function () {
-		console.log("button clicked");
-		//file: The file that will be sent to the api
-		var file = document.getElementById('filename').files[0];
+<!--|
+/ Overview
+/=========================================================================================|-->
+<div id="section-1" class="brief">
+  <section class="section">
+    <div class="container">
+      <!--|Section Header|-->
+      <header class="section-header text-center wow bounceIn" data-wow-delay=".05s">
+        <div class="row">
+          <div class="col-md-6 block-center">
+            <h2 class="section-title">Easy To Use · Real-Time Results</h2>
+            <p>Get immediate feedback and precise results in seconds</p>
+          </div>
+        </div>
+      </header> <!--|End Section Header|-->
 
-		CallAPI(file, apiUrl, apiKey);
-	});
 
-	function CallAPI(file, apiUrl, apiKey){
-		console.log("API called");
-		$(".loading").css("display", "inline-block");
-		$.ajax({
-			url: apiUrl,
-			beforeSend: function (xhrObj) {
-				xhrObj.setRequestHeader("Content-Type", "application/octet-stream");
-				xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", apiKey);
-			},
-			type: "POST",
-			crossDomain: true,
-			data: file, 
-			// '{url: "http://localhost:4000/mark_zuck.mov"}',
-			// 'Access-Control-Allow-Origin'
-			processData: false,
-			contentType: 'application/octet-stream',
-			success: function(response){
-				console.log("API success");
-				ProcessResult(response);
-				$(".loading").css("display", "none");
-				console.log(response);
-			},
-			error: function(error){
-				console.log("API failed");
-				$("#response").text(error.getAllResponseHeaders());
-				$(".loading").css("display", "none");
-				console.log(error);
-			}
-		})
-	}
-// rails generate Frame video:references video_timestamp
-	function ProcessResult(response){
-		var data = JSON.stringify(response);
-		$("#response").text(data);
-	}
-</script> 
+
+      <div class="row">
+        <div class="col-md-4 col-sm-4 margin-top-60 fp-text-right">
+          <!--|Text Box|-->
+          <div class="text-box wow fadeInDown" data-wow-delay=".1s">
+            <i class="fp-icon-small ion-ios-monitor-outline"></i>
+            <div class="text">
+              <h5 class="title">Upload Video From Your Computer</h5>
+              <p>Our easy upload button enables users to upload directly from their computer.</p>
+            </div>
+          </div> <!--|End Text Box|-->
+
+          <!--|Text Box|-->
+          <div class="text-box wow fadeInDown" data-wow-delay=".15s">
+            <i class="fp-icon-small ion-ios-color-wand-outline"></i>
+            <div class="text">
+              <h5 class="title">Get Emotion Readings Frame-by-Frame</h5>
+              <p>Our emotional ratings are processed for each single frame of your video, at a rate of 30 frames per second.</p>
+            </div>
+          </div> <!--|End Text Box|-->
+
+          <!--|Text Box|-->
+          <div class="text-box wow fadeInDown" data-wow-delay=".15s">
+            <i class="fp-icon-small ion-ios-analytics-outline"></i>
+            <div class="text">
+              <h5 class="title">Sophisticated Technology</h5>
+              <p>We use Microsoft's Cognitive Services Emotions API to deliver highly accurate, relevant feedback broken down into eight emotion indicators: Anger, Contempt, Disgust, Fear, Happiness, Neutral, Sadness, Surprise.</p>
+            </div>
+          </div> <!--|End Text Box|-->
+        </div>
+
+        <div class="col-md-8">
+          <div class="intro-img-wrap wow fadeInDown" data-wow-delay=".3s">
+          	<%= image_tag "emotions-graph-sample.png", :style => "padding-top: 150px" %> 
+             <!-- <img src="assets/images/ari-jigar-images/emotions-graph-sample.png" alt=""> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 block-center">
+          <div class="col-md-5">
+            <div class="phone-image wow fadeInLeft" data-wow-delay=".1s">
+            	<%= image_tag "record-sample.png" %> 
+              <!-- <img src="assets/images/ari-jigar-images/record-sample.png" alt=""> -->
+            </div>
+          </div>
+
+          <div class="col-md-7">
+            <!--|Section Header|-->
+            <header class="section-header alt margin-top-100 wow fadeInDown" data-wow-delay=".15s">
+              <h2 class="section-title">Ready To Try It Out?</h2>
+              <p>Start Session and make a face!</p>
+            </header> <!--|End Section Header|-->
+
+            <a class="btn btn-primary wow fadeInDown" data-wow-delay=".2s" href="/videos/new">Start Session</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="video-section wow fadeIn" data-wow-delay=".1s">
+        <!--|Section Header|-->
+  <header class="section-header text-center wow bounceIn" data-wow-delay=".05s">
+    <div class="row">
+      <div class="col-md-6 block-center">
+        <br />
+        <h2 class="section-title">How It Works</h2>
+      </div>
+    </div>
+  </header> <!--|End Section Header|-->
+
+  <!--|Video|-->
+      <div class="col-md-6 block-center video-wrap">
+        <span class="fp-meta">Watch Video</span>
+        <a class="play-btn" href="https://vimeo.com/channels/staffpicks/146064760"><i class="ion-ios-play"></i></a>
+      </div>
+  </div> <!--|End Video|-->
+</div> <!--|End Overview|-->
+
+
+<!--|===================================================================
+/ Review
+/=======================================================================|-->
+<section id="review" class="reviews section overlay-black wow fadeIn" data-wow-delay=".15s">
+  <div class="overlay-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 block-center">
+          <!--|Review Carousel|-->
+          <div class="review-carousel">
+            <div class="review-wrap">
+              <div class="review">
+                <div class="text">
+                  <p>SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL...</p>
+                </div>
+
+                <figure class="review-meta">
+                	<%= image_tag "avatar01.jpg", :class => "avatar" %> 
+                  <!-- <img class="avatar" src="assets/images/avatar01.jpg" alt=""> -->
+                  <figcaption class="info">
+                    <h6 class="name">HEIWAD OSMAN</h6>
+                    <span class="meta"><em></em> &dash; <a href="#">PM EXTRAORDINAIRE</a></span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="review-wrap">
+              <div class="review">
+                <div class="text">
+                  <p>SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL...</p>
+                </div>
+
+                <figure class="review-meta">
+                	<%= image_tag "avatar03.jpg", :class => "avatar" %> 
+
+                  <!-- <img class="avatar" src="assets/images/avatar03.jpg" alt=""> -->
+                  <figcaption class="info">
+                    <h6 class="name">HEIWAD OSMAN</h6>
+                    <span class="meta"><em></em> &dash; <a href="#">PM EXTRAORDINAIRE</a></span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="review-wrap">
+              <div class="review">
+                <div class="text">
+                  <p>SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL... SO... INTERESTING... AMAZING... COOL... COOL... COOL...</p>
+                </div>
+
+                <figure class="review-meta">
+                	<%= image_tag "avatar02.jpg", :class => "avatar" %> 
+
+                  <!-- <img class="avatar" src="assets/images/avatar02.jpg" alt=""> -->
+                  <figcaption class="info">
+                    <h6 class="name">HEIWAD OSMAN</h6>
+                    <span class="meta"><em></em> &dash; <a href="#">PM EXTRAORDINAIRE</a></span>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div> <!--|End Review Carousel|-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section> <!--|End Review|-->
