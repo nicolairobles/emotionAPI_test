@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require 'dygraph-combined'
 //= require moment
 //= require_tree .
