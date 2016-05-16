@@ -225,9 +225,9 @@ class VideosController < ApplicationController
       # end
     end
     # Upload to AWS
-    s3 = Aws::S3::Resource.new
+    # s3 = Aws::S3::Resource.new
     p "csv output"
-    p s3.bucket('emotizecsvfile').object("emotizecsvfile").upload_file("#{Rails.root}/tmp/file.csv")
+    # p s3.bucket('emotizecsvfile').object("emotizecsvfile").upload_file("#{Rails.root}/tmp/file.csv")
 
     p "Successfully created CSV"
     # Render CSV data for front-end implementation of graph
