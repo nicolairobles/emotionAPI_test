@@ -122,7 +122,7 @@ class VideosController < ApplicationController
 
     # Splice video intro frames
 
-    movie_to_splice.transcode(file_name, "-r 1 #{Rails.root}/tmp/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
+    movie_to_splice.transcode(file_name, "-r 1 -strict -2 #{Rails.root}/tmp/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
     Rails.logger.info "after transcoding"
 
     # Store image in AWS; done in before action
