@@ -199,6 +199,16 @@ class VideosController < ApplicationController
   end 
 
   def create_APIData_graph(table)
+    # HighCharts data in arrays
+    frames = table.all
+    frames.map do |frame| 
+      $anger_data = []
+      anger_data_pt = '%.3f' % frame.anger
+      $anger_data.push(anger_data_pt.to_f)
+    end 
+
+
+    # DyGraph data in csv file
     p "Creating API Data graph"
     # Create CSV file
     file = File.join(Rails.root,'tmp', "file.csv")

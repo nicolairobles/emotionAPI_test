@@ -23,13 +23,9 @@
   </div>
 </section> <!--|Intro Section|-->
 
-
-<div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
+<!-- DYGRAPH ATTEMPT NEEDING CSV -->
+<!-- <div id="graphdiv" style="width:700px; height:300px; margin: 0 auto"></div>
 <script type="text/javascript">
-
-    // containing div
-    // var div = document.getElementById("graphdiv");
-
     var req = new XMLHttpRequest();
     req.onreadystatechange = function () {
       if (req.readyState == 4) {
@@ -67,35 +63,121 @@
               return m.toDate().getTime();
           },
           xTicker: Dygraph.dateTicker
-          // xValueFormatter: Dygraph.dateString_,
-          // xValueParser: function(x) { return 1000*parseInt(x); },
-          // xTicker: Dygraph.dateTicker
         }
       );
     }
-  // g = new Dygraph(
-    // document.getElementById("graphdiv"),
-    // data 
 
-    // CSV or path to a CSV file.
-    // "/Users/nicolai/code/projects/emotionAPI_test/public/csv/file.csv"
-    
-    // "Date,Humid,Temperature\n" +
-    // "2008-05-07,76,75\n" +
-    // "2008-05-08,80,70\n" +
-    // "2008-05-09,90,80\n",
-    // {// options go here. See http://dygraphs.com/options.html
-    //  legend: 'always',
-    //  animatedZooms: true,
-    //  title: 'dygraphs chart template',
-    //  drawXGrid: true,                     
-    //  drawYGrid: false,
-    //  gridLinePattern:[0,1,1]
-    // }
+</script> -->
 
+<!-- HIGHCHARTS ATTEMPT -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<div id="highChartContainer" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!-- <div id="highChartContainer" style="min-width: 400px; height: 400px; margin: 0 auto"></div> -->
+<script type='text/javascript'>
+  <% frames = Frame.all %> 
+  $(document).ready(function(){
 
-  // );
+    chart = new Highcharts.Chart({
+          chart: {
+              type: 'column',
+              renderTo: "highChartContainer"
+          },
+          title: {
+              text: 'Stacked column chart'
+          },
+          xAxis: {
+              categories: <%=
+                frames.map do |frame| 
+                  frame.id
+                end 
+              %>
+          },
+          yAxis: {
+              min: 0,
+              title: {
+                  text: 'Total fruit consumption'
+              }
+          },
+          tooltip: {
+              pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+              shared: true
+          },
+          plotOptions: {
+              column: {
+                  stacking: 'percent'
+              }
+          },
+          series: [{
+              name: 'Anger',
+              data: 
+              <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.anger
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Contempt',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.contempt
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Disgust',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.disgust
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Fear',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.fear
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Happiness',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.happiness
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Neutral',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.neutral
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Sadness',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.sadness
+                  data_pt.to_f
+                end 
+              %>
+          }, {
+              name: 'Surprise',
+              data: <%=
+                frames.map do |frame| 
+                  data_pt = '%.3f' % frame.surprise
+                  data_pt.to_f
+                end 
+              %>
+          }]
+    });
+  });
 </script>
+
+
 
 <%= link_to 'Edit', edit_video_path(@video) %> |
 <%= link_to 'Back', videos_path %>
