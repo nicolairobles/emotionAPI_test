@@ -44,6 +44,18 @@
                   <li class="emotize"><b>Sit Tight </b>- We'll be splicing, dicing, processing, and analyzing your facial expressions!</li>
                 </ol>
                 <br>
+              <!-- ZIGGEO ATTEMPT -->
+                <ziggeo ziggeo-limit=15
+                  ziggeo-width=320
+                  ziggeo-height=240>
+                </ziggeo>
+
+                <script type="text/javascript">
+                ZiggeoApi.Events.on("submitted", function (data) {
+                    alert("Submitted a new video with token '" + data.video.token + "'!");
+                });</script>
+
+              <!-- OLD FORM -->
                 <%= render 'form' %>
 <!--                 <button href="#section-1" type="button" class="btn btn-primary btn-lg startbtn upload" >Start</button>
                 <script type="text/javascript">

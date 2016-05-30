@@ -33,73 +33,40 @@ class VideosController < ApplicationController
   def create
     @video = Video.create(video_params)
 
-    # Store file in app for immediate purposes
-    # 
-    # HOW TO STORE VIDEO AT AWS
-    # 
-    # video_file = params[:video][:upload][:file].read
-    # video_file_name = params[:video][:upload][:file].original_filename
-    # video_directory = "public/images/upload"
-    # path = File.join(video_directory, video_file_name)
-
-    # # Writes video into designated directory
-    # File.open(path, "wb") { |f| f.write(video_file) }
-    # flash[:notice] = "File uploaded"
-
-    # Splice video
+# SET UP ENV
+    # Assign video variables for tracking
     file_name = @video.video_file_file_name
     Rails.logger.info "file_name: #{file_name.inspect}"
     remote_path = @video.video_file.url
     Rails.logger.info "remote_path: #{remote_path.inspect}"
-
-    # open(file_name, 'wb') do |file|
-    #   file << open(remote_path).read
-    # end
-    # p file_name
+    # Create tmp video folder to store video in Heroku
     Dir.mkdir(File.join(Rails.root, 'tmp', "videos"))
     local_path = "#{Rails.root}/tmp/videos/#{file_name}"
     Rails.logger.info "local_path: #{local_path.inspect}"
-
     open(local_path, 'wb') do |file|
       file << open(remote_path).read
     end
-    # puts "local_path: #{local_path.inspect}"
+    # Create tmp image frames folders for temp storage in Heroku
     Dir.mkdir(File.join(Rails.root, 'tmp', "images"))
     Dir.mkdir(File.join(Rails.root, 'tmp', "images","frames"))
 
+# SPLICE VIDEO
     splice_video(local_path, file_name)
 
-    # splice_video(remote_path, file_name)
-
-    # # Retrieve emotion data from API based on frames
-    # # 
-    # # HOW TO RETRIEVE IMAGE FRAMES FROM AWS
-    # #
-    # frames_dir_path = Dir[File.join(Rails.root,'public', 'images',"frames","*")]
-
     frames_dir_path = Dir[File.join(Rails.root,'tmp', 'images',"frames","*")]
+
+# SEND FRAMES TO API / STORE DATA IN DB
     retrieve_api_data(frames_dir_path)
 
     # Delete frames locally
     clean_up_local_image_files(frames_dir_path)
     clean_up_local_dirs()
 
-    # # Create graph of data
+# CREATE GRAPH - DEFUNCT METHOD AS HIGHCHART USES DIFFERENT CONFIG
     create_APIData_graph(Frame)
-
-    
+ 
     # Redirect to same page
     redirect_to @video 
-
-    # respond_to do |format|
-    #   if @video.save
-    #     format.html { redirect_to @video, notice: 'Video was successfully created.' }
-    #     format.json { render :show, status: :created, location: @video }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @video.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   def clean_up_local_image_files(directory)
@@ -121,8 +88,7 @@ class VideosController < ApplicationController
     Rails.logger.info "movie_to_splice: #{movie_to_splice.inspect}"
     Rails.logger.info "file_name: #{file_name.inspect}"
 
-    # Splice video intro frames
-
+    # Splice video into frames
     movie_to_splice.transcode(file_name, "-r 1 -strict -2 #{Rails.root}/tmp/images/frames/#{file_name}-%04d.jpeg") { |progress| puts progress } # 0.2 ... 0.5 ... 1.0
     Rails.logger.info "after transcoding"
 
@@ -137,12 +103,9 @@ class VideosController < ApplicationController
       p s3.bucket('emotizeframes').object(fname).upload_file("#{Rails.root}/tmp/images/frames/#{fname}")
     end
 
-
     # Delete video locally
     File.delete(path_of_video)
 
-    # Redirect to FramesController
-    # redirect_to url_for(:controller => :frames, :action => :create, :param1 => :val1, :param2 => :val2) will results in /contorller_name/action_name?param1=val1&param2=val2
   end 
 
   def aws_client
@@ -156,6 +119,7 @@ class VideosController < ApplicationController
     Frame.delete_all
     p "Deleted previous frames"
     p "Retrieving API data"
+
     # Loop through directory where images are stored and read each file
     frames_directory.each do |image|
     # Emotion Image API call
@@ -198,16 +162,9 @@ class VideosController < ApplicationController
     p "Successfully retrieved emotionAPI data"
   end 
 
+# OLD METHOD FOR USE WITH DYGRAPH
+# Needed csv file; Now defunct as HighChart is working
   def create_APIData_graph(table)
-    # HighCharts data in arrays
-    frames = table.all
-    frames.map do |frame| 
-      $anger_data = []
-      anger_data_pt = '%.3f' % frame.anger
-      $anger_data.push(anger_data_pt.to_f)
-    end 
-
-
     # DyGraph data in csv file
     p "Creating API Data graph"
     # Create CSV file

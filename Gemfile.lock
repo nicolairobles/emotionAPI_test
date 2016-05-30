@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/Ziggeo/ZiggeoRubySdk.git
+  revision: c382f47ad31d1dc02c05edd9e4c201f0b2fbd001
+  specs:
+    Ziggeo (1.06)
+      httmultiparty
+      httparty (~> 0.13.5)
+
+GIT
   remote: https://github.com/thoughtbot/paperclip
   revision: 523bd46c768226893f23889079a7aa9c73b57d68
   ref: 523bd46c768226893f23889079a7aa9c73b57d68
@@ -85,6 +93,13 @@ GEM
     execjs (2.6.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    httmultiparty (0.3.16)
+      httparty (>= 0.7.3)
+      mimemagic
+      multipart-post
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -111,6 +126,8 @@ GEM
     momentjs-rails (2.11.1)
       railties (>= 3.1)
     multi_json (1.11.3)
+    multi_xml (0.5.5)
+    multipart-post (2.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     paperclip-av-transcoder (0.6.4)
@@ -200,6 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  Ziggeo!
   aws-sdk (>= 2.0.34)
   aws-sdk-rails
   byebug
