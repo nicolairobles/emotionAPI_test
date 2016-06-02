@@ -78,6 +78,15 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Mailer Configuration with Gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => ENV['G_USERNAME'],
+    :password             => ENV['G_PASSWORD'],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
 
   # AWS Configuration
   config.paperclip_defaults = {

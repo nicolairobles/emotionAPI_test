@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   resources :frames
   resources :videos
@@ -6,6 +8,12 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'static#index'
+
+
+  # Sidekiq background processes dashboard
+  # resources :recipients
+  mount Sidekiq::Web => '/sidekiq'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

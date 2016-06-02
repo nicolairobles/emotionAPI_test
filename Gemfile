@@ -58,6 +58,10 @@ gem "dygraphs-rails"
 # Moment js for datetime manipulation of csv data
 gem 'momentjs-rails'
 
+# For background processes
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

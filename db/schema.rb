@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509183438) do
+ActiveRecord::Schema.define(version: 20160602180207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160509183438) do
     t.string   "video_file_content_type"
     t.integer  "video_file_file_size"
     t.datetime "video_file_updated_at"
+    t.string   "email"
   end
 
   add_foreign_key "frames", "videos"
